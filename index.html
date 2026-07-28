@@ -5,13 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GAMING HUB MA - Premium Gaming Store & PC Builder Morocco</title>
   <meta name="description" content="Morocco's premier destination for high-end gaming accessories, mechanical keyboards, gaming mice, headsets, components & custom PC builds. Fast 24-48h shipping & Cash on Delivery across Morocco.">
-  <link rel="shortcut icon" href="/PIC PRODUITS/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="./PIC PRODUITS/favicon.ico" type="image/x-icon">
   
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- Custom Stylesheet -->
-<link rel="stylesheet" href="./public/css/styles.css"></head>
+  <link rel="stylesheet" href="./styles.css">
+</head>
 <body>
 
   <!-- Top Announcement Bar -->
@@ -27,7 +28,7 @@
   <header class="site-header">
     <div class="header-container">
       <a href="/" class="brand-logo" onclick="event.preventDefault(); window.router.navigate('/')">
-        <img src="/assets/logo.jpg" alt="GAMING HUB MA Logo" onerror="this.style.display='none'">
+        <img src="./assets/logo.jpg" alt="GAMING HUB MA Logo" onerror="this.style.display='none'">
         <span>GAMING <span class="highlight">HUB</span> MA</span>
       </a>
 
@@ -168,29 +169,9 @@
     </div>
   </footer>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
-  <script src="./public/js/firebase-config.js"></script>
-  <script>
-    try {
-      if (typeof firebase !== 'undefined' && window.firebaseConfig) {
-        firebase.initializeApp(window.firebaseConfig);
-        if (firebase.analytics) {
-          try { firebase.analytics(); } catch (ae) { console.warn("Firebase Analytics skipped:", ae); }
-        }
-      }
-    } catch (fe) {
-      console.warn("Firebase init warning:", fe);
-    }
-  </script>
-
-  <!-- Scripts Loading -->
-  <script src="/public/js/i18n.js"></script>
-  <script src="/public/js/api.js"></script>
-  <script src="/public/js/pc_builder.js"></script>
-  <script src="/public/js/admin.js"></script>
-  <script src="/public/js/app.js"></script>
+  <!-- Firebase & Application Scripts -->
+  <script type="module" src="./firebase.js"></script>
+  <script src="./admin.js"></script>
+  <script src="./app.js"></script>
 </body>
 </html>
