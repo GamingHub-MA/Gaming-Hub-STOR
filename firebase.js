@@ -7,6 +7,12 @@ import {
   remove,
   onValue
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAZ5L6fSi-t0mpkcOd0OSd6AW7bWuy5RFY",
@@ -21,6 +27,22 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const db = getDatabase(app);
+export const auth = getAuth(app);
+
+window.FirebaseAuth = {
+  login(email, password) {
+    return signInWithEmailAndPassword(auth, email, password);
+  },
+  logout() {
+    return signOut(auth);
+  },
+  onAuthStateChanged(callback) {
+    return onAuthStateChanged(auth, callback);
+  },
+  getCurrentUser() {
+    return auth.currentUser;
+  }
+};
 
 // Initial products fallback catalog for auto-seeding if database is fresh/empty
 const INITIAL_PRODUCTS = [

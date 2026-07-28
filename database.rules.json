@@ -1,0 +1,12 @@
+{
+  "rules": {
+    "products": {
+      ".read": true,
+      ".write": "auth != null && (auth.token.admin === true || auth.token.email === 'gaming.hub.ma@gmail.com')"
+    },
+    "nouveau": {
+      ".read": true,
+      ".write": "auth != null && (auth.token.admin === true || auth.token.email === 'gaming.hub.ma@gmail.com')"
+    }
+  }
+}

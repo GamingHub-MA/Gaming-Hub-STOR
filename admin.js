@@ -42,44 +42,90 @@ function closeAdminLoginModal() {
   document.getElementById('admin-login-modal')?.classList.remove('active');
 }
 
-// Submit Admin Login Form
+// Submit Admin Login Form via Firebase Authentication
 async function submitAdminLogin(e) {
   e.preventDefault();
   const email = document.getElementById('login-email')?.value.trim();
   const password = document.getElementById('login-password')?.value;
   const errorEl = document.getElementById('login-error-msg');
+  const submitBtn = e.target.querySelector('button[type="submit"]');
 
-  if (email.toLowerCase() !== 'gaming.hub.ma@gmail.com') {
+  if (!email || !password) {
     if (errorEl) {
-      errorEl.innerText = 'عذراً! هذا الحساب غير مصرح له بالدخول كمسؤول.';
+      errorEl.innerText = 'يرجى إدخال البريد الإلكتروني وكلمة السر.';
       errorEl.style.display = 'block';
     }
     return;
   }
 
-  if (password !== 'http://localhost:8000/') {
+  if (submitBtn) submitBtn.disabled = true;
+
+  try {
+    if (window.FirebaseAuth && typeof window.FirebaseAuth.login === 'function') {
+      await window.FirebaseAuth.login(email, password);
+      if (errorEl) errorEl.style.display = 'none';
+      closeAdminLoginModal();
+      const pwdInput = document.getElementById('login-password');
+      if (pwdInput) pwdInput.value = '';
+    } else {
+      throw new Error('خدمة المصادقة غير متوفرة');
+    }
+  } catch (err) {
+    console.error("Admin login error:", err);
     if (errorEl) {
-      errorEl.innerText = 'كلمة السر غير صحيحة!';
+      let msg = 'خطأ في البريد الإلكتروني أو كلمة السر!';
+      if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+        msg = 'البريد الإلكتروني أو كلمة السر غير صحيحة!';
+      } else if (err.code === 'auth/too-many-requests') {
+        msg = 'تم حظر المحاولات مؤقتاً بسبب تكرار المحاولات الخاطئة. يرجى المحاولة لاحقاً.';
+      }
+      errorEl.innerText = msg;
       errorEl.style.display = 'block';
     }
-    return;
+  } finally {
+    if (submitBtn) submitBtn.disabled = false;
   }
-
-  isSystemAdminLoggedIn = true;
-  if (errorEl) errorEl.style.display = 'none';
-  closeAdminLoginModal();
-  checkAdminSession();
-  if (typeof applyFilters === 'function') applyFilters(); // Re-render store cards to show Edit/Copy/Delete
-  renderAdminDashboard();
-  document.getElementById('admin-section')?.scrollIntoView({ behavior: 'smooth' });
 }
 
-function logoutAdmin() {
-  isSystemAdminLoggedIn = false;
-  checkAdminSession();
+async function logoutAdmin() {
+  try {
+    if (window.FirebaseAuth && typeof window.FirebaseAuth.logout === 'function') {
+      await window.FirebaseAuth.logout();
+    } else {
+      isSystemAdminLoggedIn = false;
+      checkAdminSession();
+    }
+  } catch (err) {
+    console.error("Logout error:", err);
+    isSystemAdminLoggedIn = false;
+    checkAdminSession();
+  }
   if (typeof applyFilters === 'function') applyFilters();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+// Automatically synchronize authentication state with Firebase Auth
+(function setupAuthSync() {
+  const checkAndListen = () => {
+    if (window.FirebaseAuth && typeof window.FirebaseAuth.onAuthStateChanged === 'function') {
+      window.FirebaseAuth.onAuthStateChanged((user) => {
+        if (user) {
+          isSystemAdminLoggedIn = true;
+          checkAdminSession();
+          renderAdminDashboard();
+          if (typeof applyFilters === 'function') applyFilters();
+        } else {
+          isSystemAdminLoggedIn = false;
+          checkAdminSession();
+          if (typeof applyFilters === 'function') applyFilters();
+        }
+      });
+    } else {
+      setTimeout(checkAndListen, 150);
+    }
+  };
+  checkAndListen();
+})();
 
 // -------------------------------------------------------------
 // DASHBOARD PRODUCT LISTING & FILTERING
