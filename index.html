@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAMING HUB MA - Premium Gaming Store & PC Builder Morocco</title>
+  <meta name="description" content="Morocco's premier destination for high-end gaming accessories, mechanical keyboards, gaming mice, headsets, components & custom PC builds. Fast 24-48h shipping & Cash on Delivery across Morocco.">
+  <link rel="shortcut icon" href="/PIC PRODUITS/favicon.ico" type="image/x-icon">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="/public/css/styles.css">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="announcement-bar">
+    <span>🚚 24-48h Fast Shipping Across Morocco | 💵 Cash on Delivery | 🛡️ Official Local Warranty</span>
+    <span>
+      💬 WhatsApp 1: <a href="https://wa.me/34643744122" target="_blank">+34 643 744 122</a> | 
+      WhatsApp 2: <a href="https://wa.me/212693889253" target="_blank">+212 693 889 253</a>
+    </span>
+  </div>
+
+  <!-- Sticky Header Navigation -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="/" class="brand-logo" onclick="event.preventDefault(); window.router.navigate('/')">
+        <img src="/assets/logo.jpg" alt="GAMING HUB MA Logo" onerror="this.style.display='none'">
+        <span>GAMING <span class="highlight">HUB</span> MA</span>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="main-nav">
+        <a href="/" class="nav-link" data-i18n="home" onclick="event.preventDefault(); window.router.navigate('/')">Home</a>
+        <a href="/shop" class="nav-link" data-i18n="shop" onclick="event.preventDefault(); window.router.navigate('/shop')">Shop</a>
+        <a href="/pc-builder" class="nav-link highlight-btn" data-i18n="pc_builder" onclick="event.preventDefault(); window.router.navigate('/pc-builder')">⚡ PC Builder</a>
+        <a href="/categories" class="nav-link" data-i18n="categories" onclick="event.preventDefault(); window.router.navigate('/categories')">Categories</a>
+        <a href="/bestsellers" class="nav-link" data-i18n="bestsellers" onclick="event.preventDefault(); window.router.navigate('/bestsellers')">Best Sellers</a>
+        <a href="/offers" class="nav-link" data-i18n="offers" onclick="event.preventDefault(); window.router.navigate('/offers')">Special Offers</a>
+        <a href="/about" class="nav-link" data-i18n="about" onclick="event.preventDefault(); window.router.navigate('/about')">About Us</a>
+        <a href="/contact" class="nav-link" data-i18n="contact" onclick="event.preventDefault(); window.router.navigate('/contact')">Contact</a>
+        <a href="/track-order" class="nav-link" data-i18n="track_order" onclick="event.preventDefault(); window.router.navigate('/track-order')">Track Order</a>
+      </nav>
+
+      <!-- Global Search Box with Clear Button -->
+      <div class="search-box">
+        <input type="text" class="search-input" id="globalSearchInput" placeholder="Search gaming products, brands, SKU..." onkeyup="window.handleSearchInputKey(event)">
+        <button class="search-clear-btn" id="searchClearBtn" onclick="window.clearGlobalSearch()">&times;</button>
+        <button class="search-btn" onclick="window.triggerSearch()"><i class="fas fa-search"></i></button>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="header-actions">
+        <!-- Language Selector -->
+        <select class="lang-select" id="languageSelect" onchange="window.i18n.setLanguage(this.value)">
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+          <option value="ar">العربية</option>
+        </select>
+
+        <!-- Account / Login Button -->
+        <button class="action-icon-btn" id="accountBtn" title="Account" onclick="window.handleAccountClick()">
+          <i class="fas fa-user"></i>
+        </button>
+
+        <!-- Wishlist Icon with Counter -->
+        <button class="action-icon-btn" title="Wishlist" onclick="window.router.navigate('/wishlist')">
+          <i class="fas fa-heart"></i>
+          <span class="badge-counter" id="wishlistBadge">0</span>
+        </button>
+
+        <!-- Shopping Cart Icon with Counter -->
+        <button class="action-icon-btn" title="Shopping Cart" onclick="window.router.navigate('/cart')">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="badge-counter" id="cartBadge">0</span>
+        </button>
+
+        <!-- Mobile Hamburger Button -->
+        <button class="hamburger-btn" onclick="window.toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Navigation -->
+  <div class="mobile-drawer" id="mobileDrawer" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:9999; padding:40px 20px;">
+    <button style="position:absolute; top:20px; right:20px; font-size:2rem; background:none; border:none; color:#fff;" onclick="window.toggleMobileMenu()">&times;</button>
+    <div style="display:flex; flex-direction:column; gap:20px; text-align:center; font-family:var(--font-heading); font-size:1.2rem;">
+      <a href="/" onclick="window.toggleMobileMenu(); window.router.navigate('/')">Home</a>
+      <a href="/shop" onclick="window.toggleMobileMenu(); window.router.navigate('/shop')">Shop Catalog</a>
+      <a href="/pc-builder" style="color:var(--primary-cyan);" onclick="window.toggleMobileMenu(); window.router.navigate('/pc-builder')">⚡ PC Builder Engine</a>
+      <a href="/categories" onclick="window.toggleMobileMenu(); window.router.navigate('/categories')">Categories</a>
+      <a href="/bestsellers" onclick="window.toggleMobileMenu(); window.router.navigate('/bestsellers')">Best Sellers</a>
+      <a href="/offers" onclick="window.toggleMobileMenu(); window.router.navigate('/offers')">Special Offers</a>
+      <a href="/track-order" onclick="window.toggleMobileMenu(); window.router.navigate('/track-order')">Track Order</a>
+      <a href="/account" onclick="window.toggleMobileMenu(); window.router.navigate('/account')">My Account</a>
+    </div>
+  </div>
+
+  <!-- Main View Container -->
+  <main id="app">
+    <div class="loading-spinner" style="text-align:center; padding:100px; font-family:var(--font-heading); color:var(--primary-cyan);">
+      <i class="fas fa-circle-notch fa-spin fa-3x"></i>
+      <h3 style="margin-top:20px;">INITIALIZING GAMING HUB MA...</h3>
+    </div>
+  </main>
+
+  <!-- Toast Alerts Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="brand-logo" style="margin-bottom:16px;">
+          <span>GAMING <span class="highlight">HUB</span> MA</span>
+        </div>
+        <p style="color:var(--text-muted); font-size:0.9rem;" data-i18n="footer_text">
+          Morocco's premier destination for high-end gaming accessories, mechanical keyboards, mice, headsets and PC components.
+        </p>
+        <div style="display:flex; gap:12px; margin-top:20px;">
+          <a href="https://www.instagram.com/gaming_hub.ma" target="_blank" class="action-icon-btn"><i class="fab fa-instagram"></i></a>
+          <a href="https://facebook.com/gaminghubma" target="_blank" class="action-icon-btn"><i class="fab fa-facebook"></i></a>
+          <a href="https://tiktok.com/@gaminghubma" target="_blank" class="action-icon-btn"><i class="fab fa-tiktok"></i></a>
+          <a href="https://youtube.com/@gaminghubma" target="_blank" class="action-icon-btn"><i class="fab fa-youtube"></i></a>
+          <a href="https://wa.me/34643744122" target="_blank" class="action-icon-btn" title="WhatsApp 1"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="quick_links">Quick Links</h4>
+        <ul>
+          <li><a href="/" onclick="event.preventDefault(); window.router.navigate('/')">Home</a></li>
+          <li><a href="/shop" onclick="event.preventDefault(); window.router.navigate('/shop')">Shop All Products</a></li>
+          <li><a href="/pc-builder" onclick="event.preventDefault(); window.router.navigate('/pc-builder')">PC Builder</a></li>
+          <li><a href="/bestsellers" onclick="event.preventDefault(); window.router.navigate('/bestsellers')">Best Sellers</a></li>
+          <li><a href="/offers" onclick="event.preventDefault(); window.router.navigate('/offers')">Special Offers</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Popular Categories</h4>
+        <ul>
+          <li><a href="/shop?category=gaming-mice" onclick="event.preventDefault(); window.router.navigate('/shop?category=gaming-mice')">Gaming Mice</a></li>
+          <li><a href="/shop?category=mechanical-keyboards" onclick="event.preventDefault(); window.router.navigate('/shop?category=mechanical-keyboards')">Mechanical Keyboards</a></li>
+          <li><a href="/shop?category=gaming-headsets" onclick="event.preventDefault(); window.router.navigate('/shop?category=gaming-headsets')">Gaming Headsets</a></li>
+          <li><a href="/shop?category=cpus" onclick="event.preventDefault(); window.router.navigate('/shop?category=cpus')">Processors (CPUs)</a></li>
+          <li><a href="/shop?category=graphics-cards" onclick="event.preventDefault(); window.router.navigate('/shop?category=graphics-cards')">Graphics Cards</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="customer_service">Customer Service</h4>
+        <ul style="line-height:1.8;">
+          <li><i class="fab fa-whatsapp" style="color:var(--whatsapp-green);"></i> WhatsApp 1: <a href="https://wa.me/34643744122" target="_blank" style="color:#fff;">+34 643 744 122</a></li>
+          <li><i class="fab fa-whatsapp" style="color:var(--whatsapp-green);"></i> WhatsApp 2: <a href="https://wa.me/212693889253" target="_blank" style="color:#fff;">+212 693 889 253</a></li>
+          <li><i class="fas fa-truck" style="color:var(--primary-cyan);"></i> Delivery: 24h - 48h Morocco</li>
+          <li><i class="fas fa-money-bill-wave" style="color:#ffc107;"></i> Payment: Cash on Delivery</li>
+          <li><i class="fas fa-map-marker-alt" style="color:#ff0055;"></i> Location: Casablanca, Morocco</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span data-i18n="rights_reserved">© 2026 GAMING HUB MA. All rights reserved.</span>
+      <span>Moroccan Esports & Gaming Hardware Specialist</span>
+    </div>
+  </footer>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+  <script src="/public/js/firebase-config.js"></script>
+  <script>
+    try {
+      if (typeof firebase !== 'undefined' && window.firebaseConfig) {
+        firebase.initializeApp(window.firebaseConfig);
+        if (firebase.analytics) {
+          try { firebase.analytics(); } catch (ae) { console.warn("Firebase Analytics skipped:", ae); }
+        }
+      }
+    } catch (fe) {
+      console.warn("Firebase init warning:", fe);
+    }
+  </script>
+
+  <!-- Scripts Loading -->
+  <script src="/public/js/i18n.js"></script>
+  <script src="/public/js/api.js"></script>
+  <script src="/public/js/pc_builder.js"></script>
+  <script src="/public/js/admin.js"></script>
+  <script src="/public/js/app.js"></script>
+</body>
+</html>
